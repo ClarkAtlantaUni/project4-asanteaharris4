@@ -1,4 +1,5 @@
 import sys
+from cis301.project4.client.cli_client import PhoneBillClient
 from cis301.project4.server import webapp
 
 server = object()
@@ -14,15 +15,73 @@ def main(args=None):
     if len(args)<2:
         print( f">>> Project4. Missing command line arguments" )
         print(usage())
-    parse_cli_argv(args)
+    #parse_cli_argv(args)
 
 
 def run_client(argv):
-    pass
+    phonebill_client = PhoneBillClient()
+    if argv[0] == "--client" and \
+        len(argv[1]) > 3 and \
+        len(argv[2]) > 3 and \
+        argv[3].startswith("-"):
+        username = argv[1]
+        password = argv[2]
+        phonebill_client = PhoneBillClient()
+        phonebill_client.set_username(username)
+        phonebill_client.set_password(password)
+    #TODO: Add client commandline support which leads to instantiating a PhoneBillClient
+    if "-register" in argv:
+        username = input("Enter username: ")
+        password= input("Enter password: ")
+        print(username, password)
 
+#determine whiCh to use!
+    if (argv[3]== "-add"):
+        if not len(argv) == 4:
+            print('invalid')
+            return
+        else:
+            try:
+                phonecall= int(argv[4])
+            except Exception:
+                print('INVALID, try again \n' +usage())
+                return
+    elif (argv[3]== "-delete"):
+        if (not len(argv)== 5):
+            print('INVALID, try again \n' +usage())
+            return
+        else:
+            try:
+                phonecall_id = int(argv[4])
+            except Exception:
+                print('INVALID, try again \n' +usage())
+                return
+            phonebill_client.del_phonecall(phonecall_id)
+    elif (argv[3]== "-search"):
+        if (not len(argv)== 6):
+            print('INVALID')
+            return
+        else:
+            try:
+                caller_callee = int(argv[4])
+                start_end = int(argv[4])
+            except Exception:
+                print('INVALID, try again')
+                return
+    elif (argv[3]== "-update"):
+        if (not len(argv)== 7):
+            print('INVALID, try again \n' +usage())
+            return
+        else:
+            try:
+                phonecall_id= int(argv[4])
+                phonecall = int(argv[4])
+
+            except Exception:
+                print('INVALID, try again')
+                return
 def run_server(argv):
     if '--client' in argv:
-        #TODO: Add client commandline support which leads to instantiating a PhoneBillClient
 
         exit(-1)
 

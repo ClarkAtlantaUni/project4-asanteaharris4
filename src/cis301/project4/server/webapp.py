@@ -25,7 +25,7 @@ def run(port=8000, file="database.txt"):
 
 
 @app.route('/home')
-@app.route( '/' )
+@app.route('/auth')
 def home():
     message = dict()
     message["date"] =datetime.now().strftime( '%Y' )
@@ -103,7 +103,7 @@ def logout():
     message["text"] = "Welcome"
     if request.method == "GET":
         # TODO: authenticate the user
-        return redirect("/home")
+        return redirect('/auth')
 
 @app.route('/user/home')
 def user_home():
